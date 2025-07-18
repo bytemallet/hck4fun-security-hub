@@ -31,7 +31,7 @@ export const categories = [
 // Function to fetch cyber links from content.json
 export async function fetchCyberLinks(): Promise<CyberLink[]> {
   try {
-    const response = await fetch('/content.json');
+    const response = await fetch('./content.json');
     if (!response.ok) {
       throw new Error('Failed to fetch content');
     }
