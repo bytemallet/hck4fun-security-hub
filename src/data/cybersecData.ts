@@ -28,7 +28,7 @@ export const categories = [
   'Courses'
 ];
 
-// Function to fetch cyber links from content.json
+// Function to fetch cyber links from content.json with progressive loading
 export async function fetchCyberLinks(): Promise<CyberLink[]> {
   try {
     const response = await fetch('./content.json');
@@ -39,6 +39,34 @@ export async function fetchCyberLinks(): Promise<CyberLink[]> {
   } catch (error) {
     console.error('Error loading content:', error);
     return [];
+  }
+}
+
+// Function to fetch first N items immediately for faster initial display
+export async function fetchCyberLinksWithPriority(priorityCount: number = 50): Promise<{
+  priorityLinks: CyberLink[];
+  remainingLinks: Promise<CyberLink[]>;
+}> {
+  try {
+    const response = await fetch('./content.json');
+    if (!response.ok) {
+      throw new Error('Failed to fetch content');
+    }
+    const allLinks: CyberLink[] = await response.json();
+    
+    const priorityLinks = allLinks.slice(0, priorityCount);
+    const remainingLinks = Promise.resolve(allLinks.slice(priorityCount));
+    
+    return {
+      priorityLinks,
+      remainingLinks
+    };
+  } catch (error) {
+    console.error('Error loading content:', error);
+    return {
+      priorityLinks: [],
+      remainingLinks: Promise.resolve([])
+    };
   }
 }
 

@@ -5,7 +5,7 @@ import { LinkCard } from "@/components/LinkCard";
 import { SearchFilters } from "@/components/SearchFilters";
 import { StatsOverview } from "@/components/StatsOverview";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { CyberLink, fetchCyberLinks } from "@/data/cybersecData";
+import { CyberLink, fetchCyberLinksWithPriority } from "@/data/cybersecData";
 
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -15,12 +15,19 @@ const Index = () => {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [cyberLinks, setCyberLinks] = useState<CyberLink[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadingRemaining, setLoadingRemaining] = useState(false);
 
   useEffect(() => {
     const loadData = async () => {
-      const links = await fetchCyberLinks();
-      setCyberLinks(links);
+      const { priorityLinks, remainingLinks } = await fetchCyberLinksWithPriority(50);
+      setCyberLinks(priorityLinks);
       setLoading(false);
+      
+      // Load remaining items in background
+      setLoadingRemaining(true);
+      const remaining = await remainingLinks;
+      setCyberLinks(prev => [...prev, ...remaining]);
+      setLoadingRemaining(false);
     };
     loadData();
   }, []);
@@ -136,6 +143,9 @@ const Index = () => {
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <Search className="w-4 h-4" />
               <span>{filteredLinks.length} resources found</span>
+              {loadingRemaining && (
+                <span className="text-xs opacity-75">(loading more...)</span>
+              )}
             </div>
           </div>
 
