@@ -1,11 +1,12 @@
 import { useState, useMemo, useEffect } from "react";
-import { Shield, Search, Github, Twitter, Send, Linkedin } from "lucide-react";
+import { Shield, Search, Github, Twitter, Send, Linkedin, Coffee } from "lucide-react";
 import profileImage from "@/assets/profile-image.jpg";
 import { LinkCard } from "@/components/LinkCard";
 import { SearchFilters } from "@/components/SearchFilters";
 import { StatsOverview } from "@/components/StatsOverview";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { CyberLink, fetchCyberLinksWithPriority } from "@/data/cybersecData";
+
 
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -107,6 +108,11 @@ const Index = () => {
                 <a href="https://linkedin.com/in/xaviermarrugat" target="_blank" rel="noopener noreferrer"
                    className="p-2 hover:bg-muted rounded-lg transition-colors">
                   <Linkedin className="w-4 h-4 text-muted-foreground hover:text-primary" />
+                </a>
+                <a href="https://ko-fi.com/bytemallet" target="_blank" rel="noopener noreferrer"
+                   className="flex items-center gap-1.5 px-3 py-1.5 bg-gradient-cyber text-xs font-medium rounded-lg hover:shadow-cyber transition-all duration-200 text-primary-foreground">
+                  <Coffee className="w-3.5 h-3.5" />
+                  <span>Buy me a coffee &lt;3</span>
                 </a>
               </div>
             </div>
