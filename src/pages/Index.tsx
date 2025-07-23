@@ -97,7 +97,7 @@ const Index = () => {
                    className="p-2 hover:bg-muted rounded-lg transition-colors">
                   <Send className="w-4 h-4 text-muted-foreground hover:text-primary" />
                 </a>
-                <a href="https://twitter.com/hack4fun" target="_blank" rel="noopener noreferrer"
+                <a href="https://twitter.com/hck4fun" target="_blank" rel="noopener noreferrer"
                    className="p-2 hover:bg-muted rounded-lg transition-colors">
                   <Twitter className="w-4 h-4 text-muted-foreground hover:text-primary" />
                 </a>
